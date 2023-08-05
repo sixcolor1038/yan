@@ -10,6 +10,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>yan-common</module>
         <module>yan-coupon</module>
         <module>yan-order</module>
         <module>yan-member</module>

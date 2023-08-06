@@ -11,3 +11,12 @@
 *.rar
 hs_err_pid*
 replay_pid*
+**/.gitignore
+**/HELP.md
+**/mvnw
+**/mvnw.cmd
+**/test/
+**/.mvn
+**/application.properties
+**/application.yml
+**/bootstrap.properties

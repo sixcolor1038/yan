@@ -3,26 +3,34 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.yan</groupId>
-        <artifactId>yan-common</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.1.2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-
-    <artifactId>yan-demo</artifactId>
+    <groupId>com.yan</groupId>
+    <artifactId>yan-common</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>yan-demo</name>
-    <description>yan-demo</description>
-
+    <packaging>pom</packaging>
+    <name>yan-common</name>
+    <description>yan-common</description>
     <properties>
         <java.version>17</java.version>
     </properties>
-
     <dependencies>
         <dependency>
-            <groupId>com.yan</groupId>
-            <artifactId>yan-common</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

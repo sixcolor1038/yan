@@ -21,14 +21,20 @@ public class TallyService {
         tallyMapper.insert(tally);
 
     }
+    public boolean updateTally(Tally tally) {
+        return tallyMapper.updateById(tally) > 0;
+    }
 
     public BigInteger getLatestTally() {
         QueryWrapper<Tally> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderByDesc("id");
         Long lastId = tallyMapper.selectCount(queryWrapper);
         Tally latestTally = tallyMapper.selectById(lastId);
+        System.out.println("latestTally>>>>"+latestTally);
         return new BigInteger(latestTally.getValue());
 
     }
+
+
 
 }

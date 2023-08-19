@@ -7,7 +7,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 //@EnableScheduling
 @EnableDiscoveryClient
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"com.yan.common","com.yan.demo"})
 public class DemoApplication {
 
     public static void main(String[] args) {

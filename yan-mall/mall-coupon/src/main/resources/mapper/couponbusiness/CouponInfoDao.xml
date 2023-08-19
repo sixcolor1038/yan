@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mall.coupon.couponbusiness.dao.CouponInfoDao">
+
+  <!--  <select id="queryCouponInfo" resultMap="couponMap"
+            parameterType="com.mall.coupon.couponbusiness.model.CouponInfo"
+            resultType="com.mall.coupon.couponbusiness.model.CouponInfo">
+        SELECT *
+        FROM coupon_info;
+    </select>-->
+    <select id="queryCouponInfoByName" resultType="com.mall.coupon.couponbusiness.model.CouponInfo">
+        SELECT *
+        FROM coupon_info
+        <where>
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="couponName != null and couponName != ''">
+                AND coupon_name LIKE CONCAT('%', #{couponName}, '%')
+            </if>
+            <if test="couponType != null">
+                AND coupon_type = #{couponType}
+            </if>
+            <!-- 添加更多查询条件... -->
+        </where>
+    </select>
+    <select id="queryCouponInfo" resultType="com.mall.coupon.couponbusiness.model.CouponInfo">
+        SELECT *
+        FROM coupon_info;
+    </select>
+
+</mapper>

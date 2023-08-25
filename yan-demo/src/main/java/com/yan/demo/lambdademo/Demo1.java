@@ -7,13 +7,30 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 
 public class Demo1 {
     private static final Logger logger = LoggerFactory.getLogger(Demo1.class);
 
     public static void main(String[] args) {
+        String version = "1.2.3-beta.1";
+
+        System.out.println(getVersionNumbers(version));
+    }
+
+
+    /**
+     * 从版本字符串中提取数字
+     *
+     * @param str 版本字符串
+     * @return 只包含数字的版本号
+     */
+    public static String getVersionNumbers(String str) {
+
+        return str.replaceAll("\\D+", "");
 
     }
 

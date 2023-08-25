@@ -3,6 +3,7 @@ package com.mall.coupon.couponbusiness.model;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -30,6 +31,7 @@ public class CouponInfo implements Serializable {
     /**
      * 优惠卷名字
      */
+    @NotNull
     private String couponName;
     /**
      * 数量

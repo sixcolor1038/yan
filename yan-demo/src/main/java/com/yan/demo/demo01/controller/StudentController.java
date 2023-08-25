@@ -24,4 +24,6 @@ public class StudentController  {
     public boolean update(@RequestBody Student student) {
         return studentService.updateById(student);
     }
+
+
 }

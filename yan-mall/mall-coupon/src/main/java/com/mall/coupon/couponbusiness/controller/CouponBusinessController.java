@@ -29,7 +29,6 @@ public class CouponBusinessController {
     @Operation(summary = "新增优惠券", description = "根据传参新增优惠券")
     @RequestMapping(value = "/saveCouponInfo", method = RequestMethod.POST)
     public RResult<CouponInfo> saveCouponInfo(@RequestBody CouponInfo couponInfo) {
-        log.info("11111111111111111111111111111111");
         couponInfoService.save(couponInfo);
         return RResult.success(couponInfo);
     }

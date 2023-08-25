@@ -9,6 +9,7 @@ public class RResult<T> implements Serializable {
     private String message;
     private T data;
     private long total;
+    public RResult() {}
 
     public RResult(ResponseConstant error) {
         this(ResponseConstant.SUCCESS.getCode(), ResponseConstant.SUCCESS.getMessage(), null);

@@ -29,13 +29,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@ComponentScan("com.yan")
+@ComponentScan("com.yan.common.*")
+@Component // 加上此注解
 @Aspect
-@Component
 public class WebLogAspect {
     private final static Logger log = LoggerFactory.getLogger(WebLogAspect.class);
 
-    @Pointcut("within(com.yan..*.*Controller+)")
+    @Pointcut("within(com.*..*.*Controller+)")
     public void controllerLog() {}
 
     @Before("controllerLog()")

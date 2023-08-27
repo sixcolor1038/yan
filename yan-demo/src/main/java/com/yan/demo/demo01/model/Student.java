@@ -12,6 +12,7 @@ import lombok.Data;
 @Schema(description = "学生")
 public class Student {
 
+    @Schema(description = "学生ID")
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
@@ -23,4 +24,7 @@ public class Student {
     @TableField("age")
     private Integer age;
 
+    @Schema(description = "性别")
+    @TableField("gender")
+    private String gender;
 }

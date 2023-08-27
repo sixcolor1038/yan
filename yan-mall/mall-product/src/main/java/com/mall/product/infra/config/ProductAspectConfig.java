@@ -8,6 +8,6 @@ import org.springframework.context.annotation.Import;
 @Configuration
 @Import(WebLogAspect.class)
 @ComponentScan("com.mall.product.*.*")
-public class MallProductConfig {
+public class ProductAspectConfig {
 
 }

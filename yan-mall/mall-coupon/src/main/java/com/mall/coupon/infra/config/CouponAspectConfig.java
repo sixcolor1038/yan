@@ -7,6 +7,6 @@ import org.springframework.context.annotation.Import;
 @Configuration
 @Import(WebLogAspect.class)
 @ComponentScan("com.mall.coupon.*.*")
-public class MallCouponConfig {
+public class CouponAspectConfig {
 
 }

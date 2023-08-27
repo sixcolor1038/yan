@@ -1,5 +1,6 @@
 package com.yan.demo.demo01.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,10 +12,12 @@ import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("demo")
-public class Demo01Controller {
+public class DemoController {
+
     @Autowired
     StringRedisTemplate redisTemplate;
 
+    @Operation(summary = "redis测试",description = "redis测试")
     @RequestMapping(value = "/redisTest",method = RequestMethod.POST )
     public String redisTest(){
         redisTemplate.opsForValue().set("081624a","081624b", 60, TimeUnit.SECONDS); // 设置过期时间为60秒

@@ -1,15 +1,16 @@
 package com.yan.common.constant;
 
-public enum ResponseConstant {
+public enum HttpStatus {
 
     SUCCESS("000", "操作成功"),
-    ERROR("-1", "操作失败");
-
+    FAILED("-1", "操作失败"),
+    CREATED("201","对象创建成功"),
+    NOT_FOUND("404","资源不存在");
 
     private final String code;
     private final String message;
 
-    ResponseConstant(String code, String message) {
+    HttpStatus(String code, String message) {
         this.code = code;
         this.message = message;
     }

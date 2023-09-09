@@ -1,4 +1,4 @@
 # yan
 yan is a personal practice project. 
 
-springboot3.1.2+java17
+springboot3.x+jdk17

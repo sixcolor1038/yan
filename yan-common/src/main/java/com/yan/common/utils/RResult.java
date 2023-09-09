@@ -10,7 +10,6 @@ public class RResult<T> implements Serializable {
     private String code;
     private String message;
     private T data;
-    private long total;
 
     public RResult() {
     }
@@ -91,17 +90,12 @@ public class RResult<T> implements Serializable {
         return data;
     }
 
-    public long getTotal() {
-        return total;
-    }
-
     @Override
     public String toString() {
         return "RResult{" +
                 "code='" + code + '\'' +
                 ", message='" + message + '\'' +
                 ", data=" + data +
-                ", total=" + total +
                 '}';
     }
 }

@@ -7,15 +7,41 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
+import java.util.Optional;
 
 
 public class Demo1 {
     private static final Logger logger = LoggerFactory.getLogger(Demo1.class);
 
     public static void main(String[] args) {
+        List<Integer> list = Arrays.asList(1, 8, 25, 40, 100, 200, 65, 900);
+        List<Integer> collect = list.stream().map(x -> x * x).toList();
+        System.out.println("平方："+collect);
+    }
+
+    /**
+     * 使用Lambda表达式进行并行处理
+     * 给定一个整数列表，使用Lambda表达式并行计算列表中所有元素的平方和。
+     */
+    private static void squareSumLambda() {
+        List<Integer> list = Arrays.asList(1, 8, 25, 40, 100, 200, 65, 900);
+        int sum = list.parallelStream().mapToInt(x -> x * x).sum();
+        System.out.println("平方和："+sum);
+    }
+
+    /**
+     * 使用流进行操作
+     * 给定一个整数列表，使用Lambda表达式和流操作找出列表中的最大值和最小值。
+     */
+    private static void maxMinLambda() {
+        List<Integer> list = Arrays.asList(9, 12, 5, 0, 2, 6, 8, 36,-20);
+        Optional<Integer> max = list.stream().max(Integer::compareTo);
+        Optional<Integer> min = list.stream().min(Integer::compareTo);
+        System.out.println("最小值"+min.get());
+        System.out.println("最大值"+max.get());
+    }
+
+    private static void spiltString() {
         String version = "1.2.3-beta.1";
 
         System.out.println(getVersionNumbers(version));

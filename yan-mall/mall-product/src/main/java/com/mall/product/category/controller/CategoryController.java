@@ -23,7 +23,6 @@ public class CategoryController {
     @Operation(summary = "商品分类树形")
     @RequestMapping(value = "/list/menuTree",method = RequestMethod.GET)
     public RResult<List<CategoryEntity>> list(){
-        List<CategoryEntity> entities=categoryService.listWithTree();
-        return RResult.success(entities);
+        return RResult.success(categoryService.listWithTree());
     }
 }

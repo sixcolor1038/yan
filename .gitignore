@@ -20,3 +20,6 @@ replay_pid*
 **/application.properties
 **/application.yml
 **/bootstrap.properties
+**/.idea
+**/target
+**/*.iml

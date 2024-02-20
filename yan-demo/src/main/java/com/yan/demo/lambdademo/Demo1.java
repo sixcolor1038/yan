@@ -14,9 +14,12 @@ public class Demo1 {
     private static final Logger logger = LoggerFactory.getLogger(Demo1.class);
 
     public static void main(String[] args) {
+
+        String str = "";
+        System.out.print(str.split(",").length + "--------");
         List<Integer> list = Arrays.asList(1, 8, 25, 40, 100, 200, 65, 900);
         List<Integer> collect = list.stream().map(x -> x * x).toList();
-        System.out.println("平方："+collect);
+        System.out.println("平方：" + collect);
     }
 
     /**
@@ -26,7 +29,7 @@ public class Demo1 {
     private static void squareSumLambda() {
         List<Integer> list = Arrays.asList(1, 8, 25, 40, 100, 200, 65, 900);
         int sum = list.parallelStream().mapToInt(x -> x * x).sum();
-        System.out.println("平方和："+sum);
+        System.out.println("平方和：" + sum);
     }
 
     /**
@@ -34,11 +37,11 @@ public class Demo1 {
      * 给定一个整数列表，使用Lambda表达式和流操作找出列表中的最大值和最小值。
      */
     private static void maxMinLambda() {
-        List<Integer> list = Arrays.asList(9, 12, 5, 0, 2, 6, 8, 36,-20);
+        List<Integer> list = Arrays.asList(9, 12, 5, 0, 2, 6, 8, 36, -20);
         Optional<Integer> max = list.stream().max(Integer::compareTo);
         Optional<Integer> min = list.stream().min(Integer::compareTo);
-        System.out.println("最小值"+min.get());
-        System.out.println("最大值"+max.get());
+        System.out.println("最小值" + min.get());
+        System.out.println("最大值" + max.get());
     }
 
     private static void spiltString() {
@@ -75,7 +78,7 @@ public class Demo1 {
      * 其中包含一个抽象方法 int operate(int a, int b)，
      * 然后使用Lambda表达式实现加法、减法、乘法和除法操作。
      */
-    private static void mathOperationTest(int a,int b) {
+    private static void mathOperationTest(int a, int b) {
         performOperation("Addition", MathOperations.addition(), a, b);
         performOperation("Subtraction", MathOperations.subtraction(), a, b);
         performOperation("Multiplication", MathOperations.multiplication(), a, b);
@@ -165,6 +168,7 @@ public class Demo1 {
 interface MathOperation {
     int operate(int a, int b);
 }
+
 class MathOperations {
     public static MathOperation addition() {
         return Integer::sum;//(a, b) -> a + b

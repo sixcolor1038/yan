@@ -22,6 +22,9 @@ public class RResult<T> implements Serializable {
         this(code, null, data);
     }
 
+    public RResult(String code, String message) {
+        this(code, message, null);
+    }
     public RResult(String code, String message, T data) {
         this.code = code;
         this.message = message;
@@ -43,6 +46,9 @@ public class RResult<T> implements Serializable {
         return this;
     }
 
+    public static RResult<String> ok() {
+        return new RResult<>(HttpStatus.SUCCESS.getCode(), HttpStatus.SUCCESS.getMessage());
+    }
 
     public RResult<T> success(String code, T data, String message) {
         this.code = code;

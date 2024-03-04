@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yan.demo.exceldemo.mapper.EmployeeDutyMapper">
+    <resultMap type="com.yan.demo.exceldemo.entity.EmployeeDuty" id="EmployeeDutyMap">
+        <result property="employeeDutyID" column="EMPLOYEE_DUTY_ID" jdbcType="VARCHAR"/>
+        <result property="name" column="NAME" jdbcType="VARCHAR"/>
+        <result property="employeeGroup" column="EMPLOYEE_GROUP" jdbcType="VARCHAR"/>
+        <result property="subGroup1" column="SUB_GROUP1" jdbcType="VARCHAR"/>
+        <result property="subGroup2" column="SUB_GROUP2" jdbcType="VARCHAR"/>
+        <result property="unit" column="UNIT" jdbcType="VARCHAR"/>
+        <result property="officeLocation" column="OFFICE_LOCATION" jdbcType="VARCHAR"/>
+        <result property="contact" column="CONTACT" jdbcType="VARCHAR"/>
+        <result property="thisWeekOnDuty" column="THIS_WEEK_ON_DUTY" jdbcType="VARCHAR"/>
+        <result property="nextWeekOnDuty" column="NEXT_WEEK_ON_DUTY" jdbcType="VARCHAR"/>
+        <result property="remarks" column="REMARKS" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 通过ID查询单条数据 -->
+    <select id="queryById" resultMap="EmployeeDutyMap">
+        select EMPLOYEE_DUTY_ID,
+               NAME,
+               EMPLOYEE_GROUP,
+               SUB_GROUP1,
+               SUB_GROUP2,
+               UNIT,
+               OFFICE_LOCATION,
+               CONTACT,
+               THIS_WEEK_ON_DUTY,
+               NEXT_WEEK_ON_DUTY,
+               REMARKS
+        from EMPLOYEE_DUTY
+        where EMPLOYEE_DUTY_ID = #{employeeDutyID}
+    </select>
+
+    <!--分页查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="EmployeeDutyMap">
+        select
+        EMPLOYEE_DUTY_ID,NAME,EMPLOYEE_GROUP,SUB_GROUP1,SUB_GROUP2,UNIT,OFFICE_LOCATION,CONTACT,THIS_WEEK_ON_DUTY,NEXT_WEEK_ON_DUTY,REMARKS
+        from EMPLOYEE_DUTY
+        <where>
+            <if test="employeeDutyID != null and employeeDutyID != ''">
+                and EMPLOYEE_DUTY_ID = #{employeeDutyID}
+            </if>
+            <if test="name != null and name != ''">
+                and NAME = #{name}
+            </if>
+            <if test="employeeGroup != null and employeeGroup != ''">
+                and EMPLOYEE_GROUP = #{employeeGroup}
+            </if>
+            <if test="subGroup1 != null and subGroup1 != ''">
+                and SUB_GROUP1 = #{subGroup1}
+            </if>
+            <if test="subGroup2 != null and subGroup2 != ''">
+                and SUB_GROUP2 = #{subGroup2}
+            </if>
+            <if test="unit != null and unit != ''">
+                and UNIT = #{unit}
+            </if>
+            <if test="officeLocation != null and officeLocation != ''">
+                and OFFICE_LOCATION = #{officeLocation}
+            </if>
+            <if test="contact != null and contact != ''">
+                and CONTACT = #{contact}
+            </if>
+            <if test="thisWeekOnDuty != null and thisWeekOnDuty != ''">
+                and THIS_WEEK_ON_DUTY = #{thisWeekOnDuty}
+            </if>
+            <if test="nextWeekOnDuty != null and nextWeekOnDuty != ''">
+                and NEXT_WEEK_ON_DUTY = #{nextWeekOnDuty}
+            </if>
+            <if test="remarks != null and remarks != ''">
+                and REMARKS = #{remarks}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from EMPLOYEE_DUTY
+        <where>
+            <if test="employeeDutyID != null and employeeDutyID != ''">
+                and EMPLOYEE_DUTY_ID = #{employeeDutyID}
+            </if>
+            <if test="name != null and name != ''">
+                and NAME = #{name}
+            </if>
+            <if test="employeeGroup != null and employeeGroup != ''">
+                and EMPLOYEE_GROUP = #{employeeGroup}
+            </if>
+            <if test="subGroup1 != null and subGroup1 != ''">
+                and SUB_GROUP1 = #{subGroup1}
+            </if>
+            <if test="subGroup2 != null and subGroup2 != ''">
+                and SUB_GROUP2 = #{subGroup2}
+            </if>
+            <if test="unit != null and unit != ''">
+                and UNIT = #{unit}
+            </if>
+            <if test="officeLocation != null and officeLocation != ''">
+                and OFFICE_LOCATION = #{officeLocation}
+            </if>
+            <if test="contact != null and contact != ''">
+                and CONTACT = #{contact}
+            </if>
+            <if test="thisWeekOnDuty != null and thisWeekOnDuty != ''">
+                and THIS_WEEK_ON_DUTY = #{thisWeekOnDuty}
+            </if>
+            <if test="nextWeekOnDuty != null and nextWeekOnDuty != ''">
+                and NEXT_WEEK_ON_DUTY = #{nextWeekOnDuty}
+            </if>
+            <if test="remarks != null and remarks != ''">
+                and REMARKS = #{remarks}
+            </if>
+        </where>
+    </select>
+
+    <!--新增数据-->
+    <insert id="addEmployeeDuty" parameterType="com.yan.demo.exceldemo.entity.EmployeeDuty">
+        insert into EMPLOYEE_DUTY(NAME, EMPLOYEE_GROUP, SUB_GROUP1, SUB_GROUP2, UNIT, OFFICE_LOCATION,
+                                  CONTACT, THIS_WEEK_ON_DUTY, NEXT_WEEK_ON_DUTY, REMARKS)
+        values (#{name}, #{employeeGroup}, #{subGroup1}, #{subGroup2}, #{unit}, #{officeLocation},
+                #{contact}, #{thisWeekOnDuty}, #{nextWeekOnDuty}, #{remarks})
+    </insert>
+
+    <!-- 批量新增数据 -->
+    <insert id="insertBatch" parameterType="com.yan.demo.exceldemo.entity.EmployeeDuty" useGeneratedKeys="true">
+        insert into
+        EMPLOYEE_DUTY(EMPLOYEE_DUTY_ID,NAME,EMPLOYEE_GROUP,SUB_GROUP1,SUB_GROUP2,UNIT,OFFICE_LOCATION,CONTACT,THIS_WEEK_ON_DUTY,NEXT_WEEK_ON_DUTY,REMARKS)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.employeeDutyID},#{entity.name},#{entity.employeeGroup},#{entity.subGroup1},#{entity.subGroup2},#{entity.unit},#{entity.officeLocation},#{entity.contact},#{entity.thisWeekOnDuty},#{entity.nextWeekOnDuty},#{entity.remarks})
+        </foreach>
+    </insert>
+
+    <!-- 批量新增或按主键更新数据 -->
+    <insert id="insertOrUpdateBatch" keyProperty="EMPLOYEE_DUTY_ID" useGeneratedKeys="true">
+        insert into
+        EMPLOYEE_DUTY(EMPLOYEE_DUTY_ID,NAME,EMPLOYEE_GROUP,SUB_GROUP1,SUB_GROUP2,UNIT,OFFICE_LOCATION,CONTACT,THIS_WEEK_ON_DUTY,NEXT_WEEK_ON_DUTY,REMARKS)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.employeeDutyID},#{entity.name},#{entity.employeeGroup},#{entity.subGroup1},#{entity.subGroup2},#{entity.unit},#{entity.officeLocation},#{entity.contact},#{entity.thisWeekOnDuty},#{entity.nextWeekOnDuty},#{entity.remarks})
+        </foreach>
+        on duplicate key update
+        EMPLOYEE_DUTY_ID=values(EMPLOYEE_DUTY_ID),
+        NAME=values(NAME),
+        EMPLOYEE_GROUP=values(EMPLOYEE_GROUP),
+        SUB_GROUP1=values(SUB_GROUP1),
+        SUB_GROUP2=values(SUB_GROUP2),
+        UNIT=values(UNIT),
+        OFFICE_LOCATION=values(OFFICE_LOCATION),
+        CONTACT=values(CONTACT),
+        THIS_WEEK_ON_DUTY=values(THIS_WEEK_ON_DUTY),
+        NEXT_WEEK_ON_DUTY=values(NEXT_WEEK_ON_DUTY),
+        REMARKS=values(REMARKS)
+    </insert>
+
+    <!-- 更新数据 -->
+    <update id="update">
+        update EMPLOYEE_DUTY
+        <set>
+            <if test="employeeDutyID != null and employeeDutyID != ''">
+                EMPLOYEE_DUTY_ID = #{employeeDutyID},
+            </if>
+            <if test="name != null and name != ''">
+                NAME = #{name},
+            </if>
+            <if test="employeeGroup != null and employeeGroup != ''">
+                EMPLOYEE_GROUP = #{employeeGroup},
+            </if>
+            <if test="subGroup1 != null and subGroup1 != ''">
+                SUB_GROUP1 = #{subGroup1},
+            </if>
+            <if test="subGroup2 != null and subGroup2 != ''">
+                SUB_GROUP2 = #{subGroup2},
+            </if>
+            <if test="unit != null and unit != ''">
+                UNIT = #{unit},
+            </if>
+            <if test="officeLocation != null and officeLocation != ''">
+                OFFICE_LOCATION = #{officeLocation},
+            </if>
+            <if test="contact != null and contact != ''">
+                CONTACT = #{contact},
+            </if>
+            <if test="thisWeekOnDuty != null and thisWeekOnDuty != ''">
+                THIS_WEEK_ON_DUTY = #{thisWeekOnDuty},
+            </if>
+            <if test="nextWeekOnDuty != null and nextWeekOnDuty != ''">
+                NEXT_WEEK_ON_DUTY = #{nextWeekOnDuty},
+            </if>
+            <if test="remarks != null and remarks != ''">
+                REMARKS = #{remarks},
+            </if>
+        </set>
+        where EMPLOYEE_DUTY_ID = #{employeeDutyID}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from EMPLOYEE_DUTY
+        where EMPLOYEE_DUTY_ID = #{employeeDutyID}
+    </delete>
+</mapper>

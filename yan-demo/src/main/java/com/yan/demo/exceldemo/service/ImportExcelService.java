@@ -2,6 +2,7 @@ package com.yan.demo.exceldemo.service;
 
 import com.yan.common.utils.RResult;
 import com.yan.demo.exceldemo.entity.EmployeeDuty;
+import com.yan.demo.exceldemo.entity.ProductList;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,7 +15,10 @@ import java.util.List;
  * @Date: 2024-03-03 18:58
  * @Description:
  */
-public interface EmployeeDutyService {
+public interface ImportExcelService {
+
+
+    RResult<List<ProductList>> importProductList(MultipartFile file) throws IOException;
 
     RResult<List<EmployeeDuty>> importEmployeeDuty(MultipartFile file) throws IOException;
 

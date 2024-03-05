@@ -3,9 +3,12 @@ package com.yan.demo.exceldemo.service.impl;
 import com.yan.common.utils.RResult;
 import com.yan.demo.exceldemo.controller.ImportExcelController;
 import com.yan.demo.exceldemo.entity.EmployeeDuty;
+import com.yan.demo.exceldemo.entity.ProductList;
 import com.yan.demo.exceldemo.mapper.EmployeeDutyMapper;
-import com.yan.demo.exceldemo.service.EmployeeDutyService;
+import com.yan.demo.exceldemo.mapper.ProductListMapper;
+import com.yan.demo.exceldemo.service.ImportExcelService;
 import com.yan.demo.infra.utils.ExcelUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,15 +29,55 @@ import java.util.List;
  * @Description:
  */
 @Service
-public class EmployeeDutyServiceImpl implements EmployeeDutyService {
+public class ImportExcelServiceImpl implements ImportExcelService {
     private static final Logger logger = LoggerFactory.getLogger(ImportExcelController.class);
     @Autowired
     private EmployeeDutyMapper employeeDutyMapper;
+    @Autowired
+    private ProductListMapper productListMapper;
 
+    @Override
+    public RResult<List<ProductList>> importProductList(MultipartFile file) throws IOException {
+        // 从第二行开始遍历
+        int num = 1;
+        List<List<String>> excelData = ExcelUtil.readExcelFile(num, file.getInputStream());
+        logger.info("读取excel数据:{}", excelData);
+        List<ProductList> list = new ArrayList<>();
+        for (List<String> data : excelData) {
+            if (StringUtils.isNotBlank(data.get(1))) {
+                ProductList productList = new ProductList();
+                productList.setBusinessMajor(data.get(1));
+                productList.setBusinessModule(data.get(2));
+                productList.setProductName(data.get(3));
+                productList.setBusinessItem(data.get(4));
+                productList.setChannels(data.get(5));
+                productList.setProductPath(data.get(6));
+                productList.setProductCapabilities(data.get(7));
+                if (data.get(8).length() >= 10) {
+                    productList.setAddedTime(LocalDate.parse(data.get(8).substring(0, 10)));
+                }
+                productList.setDevelopmentGroup(data.get(9));
+                productList.setDevelopmentDataResponsible(data.get(10));
+                productList.setProductClassification(data.get(11));
+                productList.setFrontendBackendClassification(data.get(12));
+                productList.setProductStatus(data.get(13));
+                productList.setPromotionApplicationMethod(data.get(14));
+                productList.setUsingOrganization(data.get(15));
+                productList.setIsPcOrMobile(data.get(16));
+                productList.setRemarks(data.get(17));
+                list.add(productList);
+            }
+        }
+        logger.info("list:{}", list);
+        productListMapper.batchInsertProductList(list);
+        return RResult.success(list);
+    }
 
     @Override
     public RResult<List<EmployeeDuty>> importEmployeeDuty(MultipartFile file) throws IOException {
-        List<List<String>> excelData = ExcelUtil.readExcelFile(file.getInputStream());
+        // 从第二行开始遍历
+        int num = 1;
+        List<List<String>> excelData = ExcelUtil.readExcelFile(num, file.getInputStream());
         logger.info("读取excel数据:{}", excelData);
         List<EmployeeDuty> list = new ArrayList<>();
         for (List<String> data : excelData) {

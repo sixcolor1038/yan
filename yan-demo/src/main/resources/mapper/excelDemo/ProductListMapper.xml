@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yan.demo.exceldemo.mapper.ProductListMapper">
+
+    <resultMap id="productListMap" type="com.yan.demo.exceldemo.entity.ProductList">
+        <id property="productListID" column="PRODUCT_LIST_ID"/>
+        <result property="businessMajor" column="BUSINESS_MAJOR"/>
+        <result property="businessModule" column="BUSINESS_MODULE"/>
+        <result property="productName" column="PRODUCT_NAME"/>
+        <result property="businessItem" column="BUSINESS_ITEM"/>
+        <result property="channels" column="CHANNELS"/>
+        <result property="productPath" column="PRODUCT_PATH"/>
+        <result property="productCapabilities" column="PRODUCT_CAPABILITIES"/>
+        <result property="addedTime" column="ADDED_TIME"/>
+        <result property="developmentGroup" column="DEVELOPMENT_GROUP"/>
+        <result property="developmentDataResponsible" column="DEVELOPMENT_DATA_RESPONSIBLE"/>
+        <result property="productClassification" column="PRODUCT_CLASSIFICATION"/>
+        <result property="frontendBackendClassification" column="FRONTEND_BACKEND_CLASSIFICATION"/>
+        <result property="productStatus" column="PRODUCT_STATUS"/>
+        <result property="promotionApplicationMethod" column="PROMOTION_APPLICATION_METHOD"/>
+        <result property="usingOrganization" column="USING_ORGANIZATION"/>
+        <result property="isPcOrMobile" column="IS_PC_OR_MOBILE"/>
+        <result property="remarks" column="REMARKS"/>
+    </resultMap>
+
+    <!-- 批量新增 -->
+    <insert id="batchInsertProductList" parameterType="com.yan.demo.exceldemo.entity.ProductList">
+        INSERT INTO PRODUCT_LIST (PRODUCT_LIST_ID, BUSINESS_MAJOR, BUSINESS_MODULE, PRODUCT_NAME, BUSINESS_ITEM,
+        CHANNELS, PRODUCT_PATH, PRODUCT_CAPABILITIES, ADDED_TIME, DEVELOPMENT_GROUP,
+        DEVELOPMENT_DATA_RESPONSIBLE, PRODUCT_CLASSIFICATION, FRONTEND_BACKEND_CLASSIFICATION,
+        PRODUCT_STATUS, PROMOTION_APPLICATION_METHOD, USING_ORGANIZATION, IS_PC_OR_MOBILE,
+        REMARKS)
+        VALUES
+        <foreach collection="entities" item="item" separator=",">
+            (#{item.productListID}, #{item.businessMajor}, #{item.businessModule}, #{item.productName},
+            #{item.businessItem}, #{item.channels}, #{item.productPath}, #{item.productCapabilities},
+            #{item.addedTime}, #{item.developmentGroup}, #{item.developmentDataResponsible},
+            #{item.productClassification}, #{item.frontendBackendClassification}, #{item.productStatus},
+            #{item.promotionApplicationMethod}, #{item.usingOrganization}, #{item.isPcOrMobile}, #{item.remarks})
+        </foreach>
+    </insert>
+</mapper>

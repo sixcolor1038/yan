@@ -2,7 +2,8 @@ package com.yan.demo.exceldemo.controller;
 
 import com.yan.common.utils.RResult;
 import com.yan.demo.exceldemo.entity.EmployeeDuty;
-import com.yan.demo.exceldemo.service.EmployeeDutyService;
+import com.yan.demo.exceldemo.entity.ProductList;
+import com.yan.demo.exceldemo.service.ImportExcelService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,9 +25,16 @@ import java.util.List;
 public class ImportExcelController {
 
     @Autowired
-    private EmployeeDutyService employeeDutyService;
+    private ImportExcelService employeeDutyService;
 
-    @Operation
+
+    @Operation(summary = "通过excel导入产品清单")
+    @PostMapping("/importProductList")
+    public RResult<List<ProductList>> importProductList(MultipartFile file) throws IOException {
+        return RResult.success(employeeDutyService.importProductList(file).getData());
+    }
+
+    @Operation(summary = "通过excel导入人员值班数据")
     @PostMapping("/importEmployeeDuty")
     public RResult<List<EmployeeDuty>> importEmployeeDuty(MultipartFile file) throws IOException {
         return RResult.success(employeeDutyService.importEmployeeDuty(file).getData());

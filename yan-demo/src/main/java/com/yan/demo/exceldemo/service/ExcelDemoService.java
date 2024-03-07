@@ -15,10 +15,12 @@ import java.util.List;
  * @Date: 2024-03-03 18:58
  * @Description:
  */
-public interface ImportExcelService {
+public interface ExcelDemoService {
 
 
     RResult<List<ProductList>> importProductList(MultipartFile file) throws IOException;
+
+    RResult<String> exportProductList(List<ProductList> list) throws IOException;
 
     RResult<List<EmployeeDuty>> importEmployeeDuty(MultipartFile file) throws IOException;
 

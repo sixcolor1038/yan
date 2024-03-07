@@ -39,4 +39,26 @@
             #{item.promotionApplicationMethod}, #{item.usingOrganization}, #{item.isPcOrMobile}, #{item.remarks})
         </foreach>
     </insert>
+    <select id="queryById" resultType="com.yan.demo.exceldemo.entity.ProductList">
+        select PRODUCT_LIST_ID,
+               BUSINESS_MAJOR,
+               BUSINESS_MODULE,
+               PRODUCT_NAME,
+               BUSINESS_ITEM,
+               CHANNELS,
+               PRODUCT_PATH,
+               PRODUCT_CAPABILITIES,
+               ADDED_TIME,
+               DEVELOPMENT_GROUP,
+               DEVELOPMENT_DATA_RESPONSIBLE,
+               PRODUCT_CLASSIFICATION,
+               FRONTEND_BACKEND_CLASSIFICATION,
+               PRODUCT_STATUS,
+               PROMOTION_APPLICATION_METHOD,
+               USING_ORGANIZATION,
+               IS_PC_OR_MOBILE,
+               REMARKS
+        FROM PRODUCT_LIST
+        WHERE PRODUCT_LIST_ID = #{productListID}
+    </select>
 </mapper>

@@ -1,12 +1,12 @@
 package com.yan.demo.exceldemo.service.impl;
 
 import com.yan.common.utils.RResult;
-import com.yan.demo.exceldemo.controller.ImportExcelController;
+import com.yan.demo.exceldemo.controller.ExcelDemoController;
 import com.yan.demo.exceldemo.entity.EmployeeDuty;
 import com.yan.demo.exceldemo.entity.ProductList;
 import com.yan.demo.exceldemo.mapper.EmployeeDutyMapper;
 import com.yan.demo.exceldemo.mapper.ProductListMapper;
-import com.yan.demo.exceldemo.service.ImportExcelService;
+import com.yan.demo.exceldemo.service.ExcelDemoService;
 import com.yan.demo.infra.utils.ExcelUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -29,8 +29,8 @@ import java.util.List;
  * @Description:
  */
 @Service
-public class ImportExcelServiceImpl implements ImportExcelService {
-    private static final Logger logger = LoggerFactory.getLogger(ImportExcelController.class);
+public class ExcelDemoServiceImpl implements ExcelDemoService {
+    private static final Logger logger = LoggerFactory.getLogger(ExcelDemoController.class);
     @Autowired
     private EmployeeDutyMapper employeeDutyMapper;
     @Autowired
@@ -44,7 +44,7 @@ public class ImportExcelServiceImpl implements ImportExcelService {
         logger.info("读取excel数据:{}", excelData);
         List<ProductList> list = new ArrayList<>();
         for (List<String> data : excelData) {
-            if (StringUtils.isNotBlank(data.get(1))) {
+            if (StringUtils.isNotBlank(data.get(1)) && StringUtils.isNotEmpty(data.get(1))) {
                 ProductList productList = new ProductList();
                 productList.setBusinessMajor(data.get(1));
                 productList.setBusinessModule(data.get(2));
@@ -72,6 +72,49 @@ public class ImportExcelServiceImpl implements ImportExcelService {
         productListMapper.batchInsertProductList(list);
         return RResult.success(list);
     }
+
+    @Override
+    public RResult<String> exportProductList(List<ProductList> list) throws IOException {
+        List<List<Object>> dataList = new ArrayList<>();
+        List<ProductList> productList = new ArrayList<>();
+        list.forEach(x -> {
+            ProductList select = productListMapper.queryById(x.getProductListID());
+            productList.add(select);
+        });
+        List<Object> name = List.of("序号", "productListID", "businessMajor",
+                "businessModule", "productName", "businessItem", "channels", "productPath",
+                "productCapabilities", "addedTime", "developmentGroup", "developmentDataResponsible",
+                "productClassification", "frontendBackendClassification", "productStatus",
+                "promotionApplicationMethod", "usingOrganization", "isPcOrMobile", "remarks");
+        dataList.add(name);
+        for (int i = 0; i < productList.size(); i++) {
+            List<Object> rowData = new ArrayList<>();
+            int j = i + 1;
+            rowData.add(j);
+            rowData.add(productList.get(i).getProductListID());
+            rowData.add(productList.get(i).getBusinessMajor());
+            rowData.add(productList.get(i).getBusinessModule());
+            rowData.add(productList.get(i).getProductName());
+            rowData.add(productList.get(i).getBusinessItem());
+            rowData.add(productList.get(i).getChannels());
+            rowData.add(productList.get(i).getProductPath());
+            rowData.add(productList.get(i).getProductCapabilities());
+            rowData.add(productList.get(i).getAddedTime());
+            rowData.add(productList.get(i).getDevelopmentGroup());
+            rowData.add(productList.get(i).getDevelopmentDataResponsible());
+            rowData.add(productList.get(i).getProductClassification());
+            rowData.add(productList.get(i).getFrontendBackendClassification());
+            rowData.add(productList.get(i).getProductStatus());
+            rowData.add(productList.get(i).getPromotionApplicationMethod());
+            rowData.add(productList.get(i).getUsingOrganization());
+            rowData.add(productList.get(i).getIsPcOrMobile());
+            rowData.add(productList.get(i).getRemarks());
+            dataList.add(rowData);
+        }
+        ExcelUtil.exportToExcel(dataList, null, "ProductList");
+        return RResult.ok();
+    }
+
 
     @Override
     public RResult<List<EmployeeDuty>> importEmployeeDuty(MultipartFile file) throws IOException {

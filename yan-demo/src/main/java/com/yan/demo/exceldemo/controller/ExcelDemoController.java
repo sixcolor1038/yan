@@ -3,7 +3,7 @@ package com.yan.demo.exceldemo.controller;
 import com.yan.common.utils.RResult;
 import com.yan.demo.exceldemo.entity.EmployeeDuty;
 import com.yan.demo.exceldemo.entity.ProductList;
-import com.yan.demo.exceldemo.service.ImportExcelService;
+import com.yan.demo.exceldemo.service.ExcelDemoService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,22 +22,27 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("importExcel")
-public class ImportExcelController {
+public class ExcelDemoController {
 
     @Autowired
-    private ImportExcelService employeeDutyService;
+    private ExcelDemoService excelService;
 
 
     @Operation(summary = "通过excel导入产品清单")
     @PostMapping("/importProductList")
     public RResult<List<ProductList>> importProductList(MultipartFile file) throws IOException {
-        return RResult.success(employeeDutyService.importProductList(file).getData());
+        return RResult.success(excelService.importProductList(file).getData());
+    }
+
+    @PostMapping("/exportProductList")
+    public RResult<String> exportProductList(@RequestBody List<ProductList> list) throws IOException {
+      return excelService.exportProductList(list);
     }
 
     @Operation(summary = "通过excel导入人员值班数据")
     @PostMapping("/importEmployeeDuty")
     public RResult<List<EmployeeDuty>> importEmployeeDuty(MultipartFile file) throws IOException {
-        return RResult.success(employeeDutyService.importEmployeeDuty(file).getData());
+        return RResult.success(excelService.importEmployeeDuty(file).getData());
     }
 
 
@@ -49,7 +54,7 @@ public class ImportExcelController {
      */
     @GetMapping("{getById}")
     public ResponseEntity<EmployeeDuty> queryById(@RequestParam Long employeeDutyId) {
-        return ResponseEntity.ok(employeeDutyService.queryById(employeeDutyId));
+        return ResponseEntity.ok(excelService.queryById(employeeDutyId));
     }
 
     /**
@@ -61,7 +66,7 @@ public class ImportExcelController {
      */
     @GetMapping
     public ResponseEntity<Page<EmployeeDuty>> paginQuery(EmployeeDuty employeeDuty, PageRequest pageRequest) {
-        return ResponseEntity.ok(employeeDutyService.paginQuery(employeeDuty, pageRequest));
+        return ResponseEntity.ok(excelService.paginQuery(employeeDuty, pageRequest));
     }
 
     /**
@@ -72,7 +77,7 @@ public class ImportExcelController {
      */
     @PostMapping("/add")
     public RResult<EmployeeDuty> add(@RequestBody EmployeeDuty employeeDuty) {
-        employeeDutyService.insertEmployeeDuty(employeeDuty);
+        excelService.insertEmployeeDuty(employeeDuty);
         return RResult.create(employeeDuty);
     }
 
@@ -84,7 +89,7 @@ public class ImportExcelController {
      */
     @PutMapping
     public ResponseEntity<EmployeeDuty> edit(EmployeeDuty employeeDuty) {
-        return ResponseEntity.ok(employeeDutyService.update(employeeDuty));
+        return ResponseEntity.ok(excelService.update(employeeDuty));
     }
 
     /**
@@ -95,6 +100,6 @@ public class ImportExcelController {
      */
     @DeleteMapping
     public ResponseEntity<Boolean> deleteById(String employeeDutyId) {
-        return ResponseEntity.ok(employeeDutyService.deleteById(employeeDutyId));
+        return ResponseEntity.ok(excelService.deleteById(employeeDutyId));
     }
 }

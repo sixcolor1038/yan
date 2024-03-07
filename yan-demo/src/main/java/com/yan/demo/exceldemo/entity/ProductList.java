@@ -15,9 +15,9 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("EMPLOYEE_DUTY")
+@TableName("PRODUCT_LIST")
 public class ProductList {
-    private int productListID;
+    private Long productListID;
     private String businessMajor;
     private String businessModule;
     private String productName;

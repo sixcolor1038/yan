@@ -7,6 +7,7 @@ import com.yan.demo.exceldemo.entity.ProductList;
 import com.yan.demo.exceldemo.mapper.EmployeeDutyMapper;
 import com.yan.demo.exceldemo.mapper.ProductListMapper;
 import com.yan.demo.exceldemo.service.ExcelDemoService;
+import com.yan.demo.infra.utils.DateUtil;
 import com.yan.demo.infra.utils.ExcelUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -111,7 +112,7 @@ public class ExcelDemoServiceImpl implements ExcelDemoService {
             rowData.add(productList.get(i).getRemarks());
             dataList.add(rowData);
         }
-        ExcelUtil.exportToExcel(dataList, null, "ProductList");
+        ExcelUtil.exportToExcel(dataList, null, "产品清单"+DateUtil.getDateTimeStr());
         return RResult.ok();
     }
 

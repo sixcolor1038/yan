@@ -5,6 +5,7 @@ import com.yan.demo.exceldemo.entity.EmployeeDuty;
 import com.yan.demo.exceldemo.entity.ProductList;
 import com.yan.demo.exceldemo.service.ExcelDemoService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,6 +21,7 @@ import java.util.List;
  * @Date: 2024-03-03 18:54
  * @Description:
  */
+@Tag(name = "excel示例")
 @RestController
 @RequestMapping("importExcel")
 public class ExcelDemoController {
@@ -33,7 +35,7 @@ public class ExcelDemoController {
     public RResult<List<ProductList>> importProductList(MultipartFile file) throws IOException {
         return RResult.success(excelService.importProductList(file).getData());
     }
-
+    @Operation(summary = "通过excel导出产品清单")
     @PostMapping("/exportProductList")
     public RResult<String> exportProductList(@RequestBody List<ProductList> list) throws IOException {
       return excelService.exportProductList(list);

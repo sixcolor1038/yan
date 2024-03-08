@@ -14,6 +14,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.apache.poi.ss.usermodel.DateUtil.isCellDateFormatted;
+
 /**
  * @Author: sixcolor
  * @Date: 2024-03-02 11:08
@@ -21,12 +23,12 @@ import java.util.List;
  */
 public class ExcelUtil {
 
-
+//"product_list.xlsx"
     public static void exportToExcel(List<List<Object>> data, String filePath, String sheetName) {
         if (StringUtils.isBlank(filePath)) {
             FileSystemView fsv = FileSystemView.getFileSystemView();
             String downloadFolderPath = fsv.getDefaultDirectory().toString(); // 获取系统的默认下载路径
-            filePath = Paths.get(downloadFolderPath, "product_list.xlsx").toString();
+            filePath = Paths.get(downloadFolderPath, sheetName+".xlsx").toString();
 
             exportToExcel(data, filePath, sheetName, false);
         } else {
@@ -88,7 +90,6 @@ public class ExcelUtil {
         }
     }
 
-
     /**
      * 读取Excel文件并返回所有数据为二维列表
      *
@@ -126,7 +127,7 @@ public class ExcelUtil {
         }
         switch (cell.getCellType()) {
             case NUMERIC:
-                if (DateUtil.isCellDateFormatted(cell)) {
+                if (isCellDateFormatted(cell)) {
                     // 修改日期时间格式为 "yyyy/MM/dd HH:mm:ss"
                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     return dateFormat.format(cell.getDateCellValue());

@@ -35,10 +35,11 @@ public class ExcelDemoController {
     public RResult<List<ProductList>> importProductList(MultipartFile file) throws IOException {
         return RResult.success(excelService.importProductList(file).getData());
     }
+
     @Operation(summary = "通过excel导出产品清单")
     @PostMapping("/exportProductList")
     public RResult<String> exportProductList(@RequestBody List<ProductList> list) throws IOException {
-      return excelService.exportProductList(list);
+        return excelService.exportProductList(list);
     }
 
     @Operation(summary = "通过excel导入人员值班数据")

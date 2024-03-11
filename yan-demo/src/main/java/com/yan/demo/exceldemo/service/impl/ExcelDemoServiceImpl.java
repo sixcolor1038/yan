@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -82,7 +83,7 @@ public class ExcelDemoServiceImpl implements ExcelDemoService {
             ProductList select = productListMapper.queryById(x.getProductListID());
             productList.add(select);
         });
-        List<Object> name = List.of("序号", "productListID", "businessMajor",
+        List<Object> name = Arrays.asList("序号", "productListID", "businessMajor",
                 "businessModule", "productName", "businessItem", "channels", "productPath",
                 "productCapabilities", "addedTime", "developmentGroup", "developmentDataResponsible",
                 "productClassification", "frontendBackendClassification", "productStatus",

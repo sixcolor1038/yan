@@ -12,7 +12,9 @@ import java.util.stream.Collectors;
 public class Demo {
 
     public static void main(String[] args) {
-        System.out.println(new Date());
+       String a = "a,b";
+       String b = "a,b";
+        System.out.println(a.equals(b));
     }
 
     private static void extracted() {

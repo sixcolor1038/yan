@@ -4,10 +4,14 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import javax.imageio.ImageIO;
 import javax.swing.filechooser.FileSystemView;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -27,7 +31,7 @@ public class ExcelUtil {
         if (StringUtils.isBlank(filePath)) {
             FileSystemView fsv = FileSystemView.getFileSystemView();
             String downloadFolderPath = fsv.getDefaultDirectory().toString(); // 获取系统的默认下载路径
-            filePath = Paths.get(downloadFolderPath, sheetName+".xlsx").toString();
+            filePath = Paths.get(downloadFolderPath, sheetName + ".xlsx").toString();
 
             exportToExcel(data, filePath, sheetName, false);
         } else {
@@ -144,6 +148,26 @@ public class ExcelUtil {
                 return "";
             default:
                 return null;
+        }
+    }
+
+    public static void insertImage(Sheet sheet, String imageUrl, int rowIndex, int columnIndex, int width, int height) {
+        try {
+            BufferedImage image = ImageIO.read(new URL(imageUrl));
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            ImageIO.write(image, "jpg", byteArrayOutputStream);
+            byte[] imageBytes = byteArrayOutputStream.toByteArray();
+
+            int pictureIdx = sheet.getWorkbook().addPicture(imageBytes, Workbook.PICTURE_TYPE_JPEG);
+            CreationHelper helper = sheet.getWorkbook().getCreationHelper();
+            Drawing<?> drawing = sheet.createDrawingPatriarch();
+            ClientAnchor anchor = helper.createClientAnchor();
+            anchor.setCol1(columnIndex);
+            anchor.setRow1(rowIndex);
+            Picture pict = drawing.createPicture(anchor, pictureIdx);
+            pict.resize(width, height);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

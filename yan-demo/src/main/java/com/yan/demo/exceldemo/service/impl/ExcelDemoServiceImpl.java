@@ -24,6 +24,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @Author: sixcolor
@@ -113,7 +115,7 @@ public class ExcelDemoServiceImpl implements ExcelDemoService {
             rowData.add(productList.get(i).getRemarks());
             dataList.add(rowData);
         }
-        ExcelUtil.exportToExcel(dataList, null, "产品清单"+DateUtil.getDateTimeStr());
+        ExcelUtil.exportToExcel(dataList, null, "产品清单" + DateUtil.getDateTimeStr());
         return RResult.ok();
     }
 
@@ -161,8 +163,24 @@ public class ExcelDemoServiceImpl implements ExcelDemoService {
      * @return 查询结果
      */
     public Page<EmployeeDuty> paginQuery(EmployeeDuty employeeDuty, PageRequest pageRequest) {
+        List<EmployeeDuty> list = employeeDutyMapper.queryAllByLimit(employeeDuty, pageRequest);
+
+
         long total = employeeDutyMapper.count(employeeDuty);
         return new PageImpl<>(employeeDutyMapper.queryAllByLimit(employeeDuty, pageRequest), pageRequest, total);
+    }
+
+    @Override
+    public List<EmployeeDuty> getList(EmployeeDuty ao) {
+
+        List<EmployeeDuty> list = employeeDutyMapper.getList(ao);
+
+        return list.stream()
+                .filter(x ->
+                        (ao.getName() == null || x.getName() != null && x.getName().contains(ao.getName())) &&
+                                (ao.getSubGroup1() == null || Objects.equals(x.getSubGroup1(), ao.getSubGroup1())) &&
+                                (ao.getUnit() == null || Objects.equals(x.getUnit(), ao.getUnit()))
+                ).toList();
     }
 
     /**

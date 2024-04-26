@@ -116,6 +116,12 @@
         </where>
     </select>
 
+    <select id="getList" resultType="com.yan.demo.exceldemo.entity.EmployeeDuty">
+        select
+        EMPLOYEE_DUTY_ID,NAME,EMPLOYEE_GROUP,SUB_GROUP1,SUB_GROUP2,UNIT,OFFICE_LOCATION,CONTACT,THIS_WEEK_ON_DUTY,NEXT_WEEK_ON_DUTY,REMARKS
+        from EMPLOYEE_DUTY
+    </select>
+
     <!--新增数据-->
     <insert id="addEmployeeDuty" parameterType="com.yan.demo.exceldemo.entity.EmployeeDuty">
         insert into EMPLOYEE_DUTY(NAME, EMPLOYEE_GROUP, SUB_GROUP1, SUB_GROUP2, UNIT, OFFICE_LOCATION,

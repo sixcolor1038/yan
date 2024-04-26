@@ -67,9 +67,21 @@ public class ExcelDemoController {
      * @param pageRequest  分页对象
      * @return 查询结果
      */
-    @GetMapping
+    @GetMapping("/getAll")
     public ResponseEntity<Page<EmployeeDuty>> paginQuery(EmployeeDuty employeeDuty, PageRequest pageRequest) {
         return ResponseEntity.ok(excelService.paginQuery(employeeDuty, pageRequest));
+    }
+
+    /**
+     * 如果不能通过sql条件进行查询，且条件可能有可能没有，
+     * 通过代码实现，可以使用stream流进行动态过滤
+     * @param employeeDuty
+     * @return
+     */
+    @Operation(summary = "通过stream流动态过滤查询")
+    @GetMapping("/getList")
+    public ResponseEntity<List<EmployeeDuty>> getList(EmployeeDuty employeeDuty) {
+        return ResponseEntity.ok(excelService.getList(employeeDuty));
     }
 
     /**

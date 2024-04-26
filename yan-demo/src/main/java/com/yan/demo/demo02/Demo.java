@@ -12,9 +12,25 @@ import java.util.stream.Collectors;
 public class Demo {
 
     public static void main(String[] args) {
-       String a = "a,b";
-       String b = "a,b";
-        System.out.println(a.equals(b));
+        HashMap<Object, Object> objectObjectHashMap = new HashMap<>();
+    }
+
+    private static void extracted1() {
+        Map<String,String> map = new HashMap<>();
+        map.put("","fsa");
+        map.put(null,"fdsg");
+        map.put("1",null);
+        map.put(" ","fda");
+        System.out.println(map);
+        System.out.println("-----------------------------------------------------");
+        int i = 1;
+        i = i++;
+        System.out.println(i);
+        System.out.println("-----------------------------------------------------");
+        float f = 3.4F;
+        double a =3;
+        short s1 = 1;
+        s1 = (short) (s1 + 1);
     }
 
     private static void extracted() {

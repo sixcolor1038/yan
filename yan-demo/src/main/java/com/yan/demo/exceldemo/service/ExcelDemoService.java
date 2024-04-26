@@ -41,6 +41,8 @@ public interface ExcelDemoService {
      */
     Page<EmployeeDuty> paginQuery(EmployeeDuty employeeDuty, PageRequest pageRequest);
 
+    List<EmployeeDuty> getList(EmployeeDuty employeeDuty);
+
     /**
      * 新增数据
      *

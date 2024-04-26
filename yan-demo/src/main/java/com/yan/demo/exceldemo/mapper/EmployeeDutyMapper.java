@@ -32,6 +32,8 @@ public interface EmployeeDutyMapper extends BaseMapper<EmployeeDuty> {
      */
     List<EmployeeDuty> queryAllByLimit(EmployeeDuty employeeDuty, @Param("pageable") Pageable pageable);
 
+    List<EmployeeDuty> getList(EmployeeDuty employeeDuty);
+
     /**
      * 统计总行数
      *
